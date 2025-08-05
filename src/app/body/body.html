@@ -1,0 +1,56 @@
+<h1>{{ isEditMode ? "Update Capsule" : "Add Capsules" }}</h1>
+
+<form #capsuleForm="ngForm" (ngSubmit)="submitCapsule()">
+  <label>
+    Type
+    <input
+      type="text"
+      name="capsuleType"
+      [(ngModel)]="capsuleFormModel.capsuleType"
+      placeholder="Enter Capsule Type"
+      required
+    />
+  </label>
+
+  <label>
+    Price
+    <input
+      type="number"
+      name="capsulePrice"
+      [(ngModel)]="capsuleFormModel.capsulePrice"
+      placeholder="Enter Capsule Price"
+      required
+      min="0"
+    />
+  </label>
+
+  <button type="submit">
+    {{ isEditMode ? "Update Capsule" : "Add Capsule" }}
+  </button>
+
+  <button type="button" *ngIf="isEditMode" (click)="resetForm()">Cancel</button>
+</form>
+<div class="capsule-table-wrapper">
+  <h1>YOUR CAPSULES</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>TYPE</th>
+        <th>PRICE</th>
+        <th>ACTIONS</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (capsule of capsules; track capsule.capsuleId) {
+      <tr>
+        <td>{{ capsule.capsuleType }}</td>
+        <td>{{ capsule.capsulePrice }}</td>
+        <td>
+          <button (click)="setEditCapsule(capsule)">Update</button>
+          <button (click)="deleteCapsule(capsule.capsuleId)">Delete</button>
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>
